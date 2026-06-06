@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, TerminalSquare } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Navbar() {
@@ -24,15 +24,37 @@ export default function Navbar() {
   }, [darkMode]);
 
   // active section useEffect goes here
+  useEffect(() => {
+    const sections = ['home', 'about', 'skills', 'resume', 'contact'];
 
+    const handleActiveSection = () => {
+      const scrollPosition = window.scrollY + 150;
+
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+
+        if (
+          element &&
+          scrollPosition >= element.offsetTop &&
+          scrollPosition < element.offsetTop + element.offsetHeight
+        ) {
+          setActiveSection(section);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleActiveSection);
+
+    return () => window.removeEventListener('scroll', handleActiveSection);
+  }, []);
 
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Resume', href: '/resume.pdf' },
-    { name: 'Contact', href: '#contact' }
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
+    { name: "Resume", href: "/resume.pdf" },
+    { name: "Contact", href: "#contact" }
   ];
 
   return (
@@ -44,26 +66,40 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-accent-cyan)]/20 to-[var(--color-accent-purple)]/20 flex items-center justify-center border border-[var(--color-accent-cyan)]/30 group-hover:border-[var(--color-accent-cyan)] transition-colors">
-            <TerminalSquare size={20} className="text-[var(--color-accent-cyan)]" />
-          </div>
-          <span className="font-mono text-lg font-bold tracking-tight text-[var(--color-text-primary)]">
-            <span className="text-[var(--color-accent-cyan)]">&gt;_</span> Jaedrian Terrence Cipriano
+        <a href="#home" className="flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-sky-400"></div>
+
+          <span className="font-semibold tracking-[0.2em] uppercase text-sm text-white">
+            JT CIPRIANO
           </span>
         </a>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-cyan)] hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.5)] font-medium text-sm transition-all duration-300"
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.name === 'Resume' ? (
+              <a
+                key={link.name}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-sm transition-all duration-300 text-[var(--color-text-secondary)] hover:text-[var(--color-accent-cyan)]"
+              >
+                Resume
+              </a>
+            ) : (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`font-medium text-sm transition-all duration-300 ${activeSection === link.href.replace('#', '')
+                  ? 'text-sky-400'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent-cyan)]'
+                  }`}
+              >
+                {link.name}
+              </a>
+            )
+          )}
           <a
             href="#contact"
             className="px-5 py-2.5 rounded-full bg-[var(--color-dark-800)] border border-white/10 hover:border-[var(--color-accent-cyan)]/50 text-sm font-medium transition-all hover:shadow-[0_0_15px_rgba(0,212,255,0.15)]"
