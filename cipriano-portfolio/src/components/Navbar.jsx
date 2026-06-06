@@ -100,6 +100,12 @@ export default function Navbar() {
               {link.name}
             </a>
           ))}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-full border border-white/10"
+          >
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
         </div>
       )}
     </nav>
