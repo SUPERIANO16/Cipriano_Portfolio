@@ -37,15 +37,19 @@ export default function Hero() {
       </motion.h1>
 
       <motion.p variants={item} className="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10">
-        I'm a 3rd Year Computer Science student engineering high-performance, accessible, and beautiful web experiences. Looking for a Frontend Developer Internship to push boundaries.
+        I'm a Frontend Developer and Computer Science student engineering high-performance, accessible, and beautiful web experiences. Passionate about bringing creative designs to life with code.
       </motion.p>
 
-      <motion.div variants={item} className="flex gap-4">
+      <motion.div variants={item} className="flex flex-wrap gap-4">
         <a href="#projects" className="px-6 py-3 bg-sky-500 text-slate-950 font-medium rounded-sm hover:bg-sky-400 transition-colors flex items-center gap-2">
           View Projects
         </a>
         <a href="#contact" className="px-6 py-3 border border-slate-700 text-slate-300 font-medium rounded-sm hover:border-sky-500 hover:text-sky-400 transition-colors">
           Contact Me
+        </a>
+        <a href="/resume.pdf" download className="px-6 py-3 border border-slate-700 text-slate-300 font-medium rounded-sm hover:border-sky-500 hover:text-sky-400 transition-colors flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Resume
         </a>
       </motion.div>
     </motion.section>

@@ -9,16 +9,16 @@ const ExternalLink = ({ size = 24 }) => (
 
 const projects = [
   {
-    title: 'AI Agent Interface',
-    description: 'A real-time dashboard for orchestrating multi-agent workflows. Built with React, WebSocket, and custom animations.',
-    tech: ['React', 'Framer Motion', 'Zustand', 'Tailwind'],
+    title: 'E-Commerce Storefront',
+    description: 'A high-performance headless e-commerce frontend. Features include real-time cart updates, optimistic UI, and instant search.',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'Redux Toolkit'],
     github: '#',
     live: '#'
   },
   {
-    title: 'Algorithmic Visualizer',
-    description: 'Interactive visualization of complex sorting and pathfinding algorithms, engineered for performance at 60fps.',
-    tech: ['TypeScript', 'Canvas API', 'Vite'],
+    title: 'Interactive Data Dashboard',
+    description: 'A financial dashboard rendering complex datasets with hardware acceleration. Custom data grids and charting solutions.',
+    tech: ['TypeScript', 'React', 'Recharts', 'Vite'],
     github: '#',
     live: '#'
   }

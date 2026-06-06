@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 const skills = [
-  "React", "TypeScript", "JavaScript", "Tailwind CSS", 
-  "Framer Motion", "Node.js", "Git", "Figma"
+  "React", "Next.js", "TypeScript", "JavaScript (ES6+)", "Tailwind CSS", 
+  "Framer Motion", "Redux Toolkit", "Vite", "Git", "Figma", "Accessibility (a11y)"
 ];
 
 export default function Skills() {
