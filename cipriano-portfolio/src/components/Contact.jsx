@@ -13,18 +13,18 @@ export default function Contact() {
     <footer id="contact" className="w-full border-t border-slate-800 py-12 mt-20 z-10 relative">
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">Ready to build.</h2>
-          <p className="text-slate-400">Seeking a Frontend Developer Internship.</p>
+          <h2 className="text-2xl font-bold text-slate-100 mb-2">Let's Build Something Great</h2>
+          <p className="text-slate-400">Frontend Developer Intern Applicant • BS Computer Science Student</p>
         </div>
-        
+
         <div className="flex gap-6">
-          <a href="#" aria-label="GitHub Profile" className="text-slate-400 hover:text-sky-400 transition-colors">
+          <a href="https://github.com/SUPERIANO16" aria-label="GitHub Profile" className="text-slate-400 hover:text-sky-400 transition-colors">
             <Github size={24} />
           </a>
-          <a href="#" aria-label="LinkedIn Profile" className="text-slate-400 hover:text-sky-400 transition-colors">
+          <a href="https://www.linkedin.com/in/jaedrian-terrence-cipriano-715294399" aria-label="LinkedIn Profile" className="text-slate-400 hover:text-sky-400 transition-colors">
             <Linkedin size={24} />
           </a>
-          <a href="mailto:hello@example.com" aria-label="Email Me" className="text-slate-400 hover:text-sky-400 transition-colors">
+          <a href="mailto:terrencecipriano@gmail.com" aria-label="Email Me" className="text-slate-400 hover:text-sky-400 transition-colors">
             <Mail size={24} />
           </a>
         </div>

@@ -6,19 +6,33 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const [darkMode, setDarkMode] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener('scroll', handleScroll);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+  }, [darkMode]);
+
+  // active section useEffect goes here
+
+
+
   const navLinks = [
-    { name: 'Expertise', href: '#expertise' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Playground', href: '#playground' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Resume', href: '/resume.pdf' },
+    { name: 'Contact', href: '#contact' }
   ];
 
   return (
@@ -35,7 +49,7 @@ export default function Navbar() {
             <TerminalSquare size={20} className="text-[var(--color-accent-cyan)]" />
           </div>
           <span className="font-mono text-lg font-bold tracking-tight text-[var(--color-text-primary)]">
-            <span className="text-[var(--color-accent-cyan)]">&gt;_</span> prompt.engineer
+            <span className="text-[var(--color-accent-cyan)]">&gt;_</span> Jaedrian Terrence Cipriano
           </span>
         </a>
 
@@ -56,6 +70,12 @@ export default function Navbar() {
           >
             Hire Me
           </a>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-full border border-white/10"
+          >
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
         </div>
 
         {/* Mobile Toggle */}

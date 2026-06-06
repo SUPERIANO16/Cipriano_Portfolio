@@ -8,7 +8,7 @@ export default function About() {
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-4">About Me</h2>
           <p className="text-[var(--color-text-secondary)] max-w-xl mx-auto text-base sm:text-lg">
-            Turning complex AI challenges into elegant prompt solutions
+            Building user-focused applications through thoughtful design and modern web technologies
           </p>
         </div>
 
@@ -22,27 +22,28 @@ export default function About() {
             </div>
 
             <p className="text-[var(--color-text-secondary)] leading-relaxed">
-              I'm a <span className="text-[var(--color-text-primary)] font-medium">Prompt Engineer</span> and
-              AI specialist with a deep passion for unlocking the full potential of large language models. My
-              expertise spans across <span className="text-[var(--color-accent-cyan)]">GPT-4</span>,{' '}
-              <span className="text-[var(--color-accent-purple)]">Claude</span>,{' '}
-              <span className="text-[var(--color-accent-pink)]">Gemini</span>, and a range of open-source models.
+              I'm a <span className="text-[var(--color-text-primary)] font-medium">Frontend Developer</span> and a
+              Computer Science student currently pursuing the Intelligent Systems track at De La Salle University Dasmariñas. I enjoy building applications that solve real problems while delivering intuitive and accessible user experiences.
             </p>
 
             <p className="text-[var(--color-text-secondary)] leading-relaxed">
-              I specialize in designing robust prompt architectures that are reliable, scalable, and production-ready.
-              From chain-of-thought reasoning to multi-agent orchestration, I craft systems that consistently
-              deliver exceptional results.
+              My experience spans frontend development, mobile development, and AI-assisted applications. I work primarily with <span className="text-[var(--color-accent-cyan)]">React</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Flutter</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Next.js</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Framer Motion</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Redux Toolkit</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Vite</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Git</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Figma</span>,{' '}
+              <span className="text-[var(--color-accent-cyan)]">Accessibility (a11y)</span>, and other related technologies.
             </p>
 
             <p className="text-[var(--color-text-secondary)] leading-relaxed">
-              My approach combines deep technical understanding of transformer architectures with a creative
-              intuition for language — treating every prompt as a precise interface between human intent and
-              machine intelligence.
+              Whether I'm developing study tools, client portals, or interactive educational platforms, I focus on creating clean interfaces that balance usability, performance, and maintainable code.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              {['GPT-4', 'Claude 3', 'Gemini Pro', 'LLaMA', 'Mistral', 'RAG'].map((tag) => (
+              {['React', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'Tailwind CSS', 'Framer Motion', 'Redux Toolkit', 'Vite', 'Git', 'Figma', 'Accessibility (a11y)'].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-xs font-mono rounded-full border border-white/10 bg-white/5 text-[var(--color-text-muted)] hover:border-[var(--color-accent-cyan)]/30 hover:text-[var(--color-accent-cyan)] transition-all duration-300"
