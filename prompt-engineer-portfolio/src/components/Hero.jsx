@@ -1,84 +1,53 @@
-import { useState, useEffect } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
-  const titles = ['LLM Optimization', 'Agentic Frameworks', 'RAG Systems', 'Context Design'];
-  const [titleIndex, setTitleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timer;
-    const currentTitle = titles[titleIndex];
-
-    if (isDeleting) {
-      timer = setTimeout(() => {
-        setDisplayText((prev) => prev.substring(0, prev.length - 1));
-        if (displayText.length === 0) {
-          setIsDeleting(false);
-          setTitleIndex((prev) => (prev + 1) % titles.length);
-        }
-      }, 50);
-    } else {
-      timer = setTimeout(() => {
-        setDisplayText(currentTitle.substring(0, displayText.length + 1));
-        if (displayText.length === currentTitle.length) {
-          setTimeout(() => setIsDeleting(true), 2000); // Pause before deleting
-        }
-      }, 100);
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
     }
+  };
 
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, titleIndex]);
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 50 } }
+  };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 px-6">
-      <div className="relative z-10 max-w-5xl mx-auto text-center space-y-8 animate-fade-in-up">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--color-accent-cyan)]/30 bg-[var(--color-accent-cyan)]/5 backdrop-blur-md">
-          <Sparkles size={16} className="text-[var(--color-accent-cyan)] animate-pulse-slow" />
-          <span className="text-sm font-mono text-[var(--color-accent-cyan)] uppercase tracking-wider">
-            Advanced AI Tooling Specialist
-          </span>
-        </div>
+    <motion.section 
+      className="min-h-[90vh] flex flex-col justify-center items-start pt-20"
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
+      <motion.div variants={item} className="flex items-center gap-3 mb-6">
+        <div className="h-[1px] w-12 bg-sky-500"></div>
+        <p className="font-mono text-sky-400 text-sm tracking-widest uppercase">System Initialization</p>
+      </motion.div>
+      
+      <motion.h1 variants={item} className="text-6xl md:text-8xl font-bold tracking-tighter text-slate-100 mb-4 leading-tight">
+        Building interfaces <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-600 text-glow">
+          with precision.
+        </span>
+      </motion.h1>
 
-        {/* Headline */}
-        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]">
-          Engineering Context. <br className="hidden sm:block" />
-          <span className="gradient-text">Orchestrating Intelligence.</span>
-        </h1>
+      <motion.p variants={item} className="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10">
+        I'm a 3rd Year Computer Science student engineering high-performance, accessible, and beautiful web experiences. Looking for a Frontend Developer Internship to push boundaries.
+      </motion.p>
 
-        {/* Typing effect */}
-        <div className="h-12 flex items-center justify-center">
-          <p className="text-xl sm:text-3xl text-[var(--color-text-secondary)] font-medium">
-            Expert in <span className="text-[var(--color-text-primary)]">{displayText}</span>
-            <span className="inline-block w-[3px] h-[1em] bg-[var(--color-accent-cyan)] ml-1 align-middle animate-[typing-cursor_1s_infinite]" />
-          </p>
-        </div>
-
-        <p className="max-w-2xl mx-auto text-lg text-[var(--color-text-muted)] mt-6">
-          I design sophisticated prompt architectures, build autonomous multi-agent swarms, and optimize enterprise RAG pipelines to push the boundaries of what LLMs can achieve.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-8">
-          <a
-            href="#projects"
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[var(--color-accent-cyan)] to-[var(--color-accent-purple)] text-white font-semibold text-lg overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,212,255,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
-          >
-            <span className="relative z-10">Explore Matrix</span>
-            <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-          </a>
-          
-          <a
-            href="#playground"
-            className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md text-[var(--color-text-primary)] font-semibold text-lg hover:border-[var(--color-accent-pink)]/50 hover:bg-[var(--color-accent-pink)]/5 transition-all duration-300"
-          >
-            Try Prompt Playground
-          </a>
-        </div>
-      </div>
-    </section>
+      <motion.div variants={item} className="flex gap-4">
+        <a href="#projects" className="px-6 py-3 bg-sky-500 text-slate-950 font-medium rounded-sm hover:bg-sky-400 transition-colors flex items-center gap-2">
+          View Projects
+        </a>
+        <a href="#contact" className="px-6 py-3 border border-slate-700 text-slate-300 font-medium rounded-sm hover:border-sky-500 hover:text-sky-400 transition-colors">
+          Contact Me
+        </a>
+      </motion.div>
+    </motion.section>
   );
 }

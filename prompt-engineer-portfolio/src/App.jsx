@@ -1,27 +1,21 @@
-import React from 'react';
-import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Expertise from './components/Expertise';
 import Projects from './components/Projects';
-import Playground from './components/Playground';
+import Skills from './components/Skills';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
-import Background from './components/Background';
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-[var(--color-dark-950)] text-[var(--color-text-primary)] selection:bg-[var(--color-accent-cyan)]/20 overflow-x-hidden">
-      <Background />
-      <Navbar />
-      <main className="relative z-10 flex flex-col gap-24 sm:gap-32 pb-24">
-        <Hero />
-        <Expertise />
-        <Projects />
-        <Playground />
+    <>
+      <div className="bg-noise"></div>
+      <div className="relative min-h-screen text-slate-100 flex flex-col items-center selection:bg-sky-500/30 selection:text-white">
+        <main className="w-full max-w-6xl px-6 md:px-12 flex flex-col gap-32 pb-32">
+          <Hero />
+          <Projects />
+          <Skills />
+        </main>
         <Contact />
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 }
 

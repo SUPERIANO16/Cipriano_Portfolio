@@ -1,109 +1,76 @@
-import { useState } from 'react';
-import { ChevronDown, ExternalLink, Code2 } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { motion } from 'framer-motion';
+
+const Github = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 9 18v4"></path></svg>
+);
+const ExternalLink = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+);
+
+const projects = [
+  {
+    title: 'AI Agent Interface',
+    description: 'A real-time dashboard for orchestrating multi-agent workflows. Built with React, WebSocket, and custom animations.',
+    tech: ['React', 'Framer Motion', 'Zustand', 'Tailwind'],
+    github: '#',
+    live: '#'
+  },
+  {
+    title: 'Algorithmic Visualizer',
+    description: 'Interactive visualization of complex sorting and pathfinding algorithms, engineered for performance at 60fps.',
+    tech: ['TypeScript', 'Canvas API', 'Vite'],
+    github: '#',
+    live: '#'
+  }
+];
 
 export default function Projects() {
-  const [expandedId, setExpandedId] = useState(null);
-
-  const projects = [
-    {
-      id: 1,
-      title: 'Enterprise RAG Pipeline Optimizations',
-      description: 'Redesigned the retrieval and generation prompt architecture for a Fortune 500 legal tech firm, reducing token hallucination by 42% and improving citation accuracy.',
-      tags: ['Claude 3.5 Sonnet', 'Pinecone', 'LangChain'],
-      promptBreakdown: `// System Prompt Optimization\n\n<role>\nYou are a rigorous legal analyst. Your primary directive is to synthesize the provided context blocks into an accurate, objective summary. \n</role>\n\n<constraints>\n1. DO NOT incorporate external knowledge. \n2. If the answer is not in the <context>, output EXACTLY: "Insufficient information provided."\n3. Cite the [Document_ID] inline for every factual claim.\n</constraints>\n\n<context>\n{{retrieved_chunks}}\n</context>\n\n<user_query>\n{{query}}\n</user_query>\n\n<scratchpad>\n// Step-by-step reasoning block\n</scratchpad>`
-    },
-    {
-      id: 2,
-      title: 'Autonomous Multi-Agent Swarm',
-      description: 'Orchestrated a 3-agent swarm (Planner, Coder, Reviewer) for automated code refactoring. Implemented a self-correcting feedback loop that reduced syntax errors in final outputs by 85%.',
-      tags: ['GPT-4o', 'CrewAI', 'Python'],
-      promptBreakdown: `// Agent: Critic/Reviewer Persona\n\nAnalyze the <generated_code> against the <original_requirements>. \n\nYou must evaluate based on these criteria:\n- Time complexity (O(N) preferred)\n- Type safety\n- Edge case handling\n\nOutput your review in the following JSON schema:\n{\n  "is_approved": boolean,\n  "critical_flaws": string[],\n  "suggested_fixes": string\n}`
-    },
-    {
-      id: 3,
-      title: 'Creative Writing Copilot',
-      description: 'Developed a few-shot prompt strategy for a creative writing application that adapts to the user\'s specific narrative voice and pacing preferences.',
-      tags: ['Gemini 1.5 Pro', 'Few-Shot', 'JSON'],
-      promptBreakdown: `// Voice Cloning Prompt Structure\n\nAnalyze the user's <writing_samples>. Identify their: \n1. Sentence length variance\n2. Vocabulary tier (e.g., colloquial, academic, poetic)\n3. Emotional undertone\n\nThen, continue the <draft_text> mimicking this exact style.\n\n<writing_samples>\n{samples}\n</writing_samples>\n\n<draft_text>\n{draft}\n</draft_text>`
-    }
-  ];
-
   return (
-    <section id="projects" className="relative px-6 max-w-7xl mx-auto w-full">
-      <div className="mb-16">
-        <h2 className="text-sm font-mono text-[var(--color-accent-cyan)] tracking-widest uppercase mb-3">02. Showcase</h2>
-        <h3 className="text-3xl md:text-5xl font-bold">Prompt Showcase Matrix</h3>
+    <section id="projects" className="py-20 w-full relative">
+      <div className="flex items-center gap-4 mb-12">
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Featured Work</h2>
+        <div className="flex-grow h-[1px] bg-slate-800"></div>
       </div>
 
-      <div className="flex flex-col gap-8">
-        {projects.map((project) => (
-          <div key={project.id} className="glass neon-border p-6 md:p-8 relative overflow-hidden group">
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((project, i) => (
+          <motion.div 
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ delay: i * 0.2 }}
+            className="group relative glass rounded-sm overflow-hidden border border-slate-800 hover:border-sky-500/50 transition-colors"
+          >
+            {/* The technical hover reveal: a mock code overlay */}
+            <div className="absolute inset-0 bg-slate-950/95 flex flex-col justify-center px-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 font-mono text-sm text-sky-400" aria-hidden="true">
+              <p>{`<Project>`}</p>
+              <p className="pl-4 text-slate-300">{`name="${project.title}"`}</p>
+              <p className="pl-4 text-slate-300">{`status="deployed"`}</p>
+              <p className="pl-4 text-slate-300">{`performance="optimized"`}</p>
+              <p>{`</Project>`}</p>
+            </div>
+
+            <div className="p-8 h-full flex flex-col relative z-20 group-hover:opacity-0 transition-opacity duration-300">
+              <h3 className="text-2xl font-semibold mb-3 text-slate-100">{project.title}</h3>
+              <p className="text-slate-400 mb-6 flex-grow leading-relaxed">{project.description}</p>
               
-              {/* Left Content */}
-              <div className="flex-1">
-                <h4 className="text-2xl font-bold text-white mb-3 flex items-center gap-3">
-                  {project.title}
-                  <a href="#" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent-cyan)] transition-colors">
-                    <ExternalLink size={18} />
-                  </a>
-                </h4>
-                <p className="text-[var(--color-text-secondary)] mb-6 text-base md:text-lg">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6 md:mb-0">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 rounded-full bg-[var(--color-dark-800)] border border-white/10 text-xs font-mono text-[var(--color-accent-cyan)]">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <ul className="flex flex-wrap gap-2 mb-8 font-mono text-xs text-sky-400">
+                {project.tech.map((t, idx) => (
+                  <li key={idx} className="bg-sky-500/10 px-2 py-1 rounded-sm border border-sky-500/20">{t}</li>
+                ))}
+              </ul>
 
-              {/* Right Action */}
-              <div className="md:w-64 shrink-0">
-                <button
-                  onClick={() => setExpandedId(expandedId === project.id ? null : project.id)}
-                  className="w-full flex items-center justify-between px-5 py-3 rounded-xl bg-[var(--color-dark-800)] hover:bg-[var(--color-dark-700)] border border-white/10 transition-colors text-sm font-medium"
-                >
-                  <span className="flex items-center gap-2 text-white">
-                    <Code2 size={16} className="text-[var(--color-accent-purple)]" />
-                    View Prompt Breakdown
-                  </span>
-                  <ChevronDown
-                    size={16}
-                    className={cn('transition-transform duration-300 text-[var(--color-text-muted)]', expandedId === project.id ? 'rotate-180' : '')}
-                  />
-                </button>
+              <div className="flex gap-4">
+                <a href={project.github} aria-label={`GitHub Repository for ${project.title}`} className="text-slate-400 hover:text-sky-400 transition-colors">
+                  <Github size={20} />
+                </a>
+                <a href={project.live} aria-label={`Live Demo for ${project.title}`} className="text-slate-400 hover:text-sky-400 transition-colors">
+                  <ExternalLink size={20} />
+                </a>
               </div>
             </div>
-
-            {/* Expandable Code Block */}
-            <div
-              className={cn(
-                'grid transition-all duration-300 ease-in-out',
-                expandedId === project.id ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'
-              )}
-            >
-              <div className="overflow-hidden">
-                <div className="bg-[#0d1117] border border-white/10 rounded-xl p-4 sm:p-6 overflow-x-auto relative group/code">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-accent-cyan)] via-[var(--color-accent-purple)] to-transparent opacity-50" />
-                  <pre className="font-mono text-sm leading-relaxed text-[#c9d1d9] whitespace-pre-wrap break-words">
-                    <code>
-                      {project.promptBreakdown.split('\n').map((line, i) => (
-                        <div key={i} className="table-row">
-                          <span className="table-cell text-[#484f58] select-none pr-4 text-right min-w-[2rem] text-xs pt-0.5">{i + 1}</span>
-                          <span className="table-cell">{line.startsWith('//') ? <span className="text-[#8b949e]">{line}</span> : line.includes('<') ? <span className="text-[#7ee787]">{line}</span> : line}</span>
-                        </div>
-                      ))}
-                    </code>
-                  </pre>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
