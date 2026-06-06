@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <!-- Terminal window -->
+  <rect x="4" y="8" width="56" height="48" rx="8" stroke="url(#g)" stroke-width="3" fill="#0a0a0f"/>
+  <!-- Title bar dots -->
+  <circle cx="14" cy="17" r="2.5" fill="#ec4899"/>
+  <circle cx="22" cy="17" r="2.5" fill="#00d4ff"/>
+  <circle cx="30" cy="17" r="2.5" fill="#10b981"/>
+  <!-- Prompt cursor  >_  -->
+  <text x="14" y="43" font-family="monospace" font-size="22" font-weight="700" fill="url(#g)">&gt;_</text>
+</svg>
