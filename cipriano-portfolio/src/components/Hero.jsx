@@ -41,7 +41,7 @@ export default function Hero() {
       </motion.h1>
 
       <motion.p variants={item} className="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10">
-        I'm a 3rd-year BS Computer Science student specializing in Intelligent Systems at De La Salle University Dasmariñas. I build purposeful interfaces, from AI-powered academic tools to freelance web applications, with a focus on clean user experiences and real-world impact.
+        I am a Computer Science student who builds purposeful interfaces, from AI-powered tools to freelance web applications, with a focus on clean user experiences and real-world impact.
       </motion.p>
 
       <motion.div variants={item} className="flex flex-wrap gap-4">
