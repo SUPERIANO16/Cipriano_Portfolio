@@ -151,7 +151,7 @@ function App() {
               className="mb-5 inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)] shadow-sm"
             >
               <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_22px_var(--accent)]" />
-              Frontend Developer Portfolio
+              Open to Internship Opportunities
             </motion.p>
 
             <motion.h1
