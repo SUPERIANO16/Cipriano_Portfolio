@@ -158,7 +158,7 @@ function App() {
               variants={sectionVariants}
               className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.08em] text-[var(--heading)] sm:text-6xl lg:text-8xl"
             >
-              Jaedrian Terrence T. Cipriano builds purposeful interfaces.
+              Jaedrian Terrence T. Cipriano
             </motion.h1>
 
             <motion.p
@@ -204,9 +204,8 @@ function App() {
             <div className="group relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[var(--border-strong)] bg-[var(--surface-strong)] shadow-[0_30px_100px_var(--shadow)]">
               <img
                 alt="Portrait of Jaedrian Terrence T. Cipriano"
-                className={`h-full w-full object-cover transition-opacity duration-500 ${
-                  photoLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
+                className={`h-full w-full object-cover transition-opacity duration-500 ${photoLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
                 onLoad={() => setPhotoLoaded(true)}
                 src="/profile.jpg"
               />
