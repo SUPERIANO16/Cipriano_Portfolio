@@ -207,14 +207,14 @@ function App() {
                 className={`h-full w-full object-cover transition-opacity duration-500 ${photoLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
                 onLoad={() => setPhotoLoaded(true)}
-                src="/profile.jpg"
+                src="/profile.png"
               />
               {!photoLoaded && (
                 <div aria-hidden="true" className="absolute inset-0 grid place-items-center p-8">
                   <div className="w-full rounded-[1.5rem] border border-dashed border-[var(--border-strong)] bg-[var(--surface)] p-8 text-center">
                     <div className="mx-auto mb-6 h-28 w-28 rounded-full border border-[var(--border)] bg-[linear-gradient(135deg,var(--surface-strong),var(--bg))]" />
                     <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)]">
-                      /public/profile.jpg
+                      /public/profile.png
                     </p>
                     <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                       Add your photo here. Layout already reserves space beside
