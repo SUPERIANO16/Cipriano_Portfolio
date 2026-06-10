@@ -80,7 +80,7 @@ const projects = [
     tech: ['JavaScript', 'HTML', 'CSS'],
   },
   {
-    title: 'Hybrids Team Client Portal',
+    title: 'Private Client Portal',
     description:
       'Freelance React portal concept for project tracking, client workflows, and clean dashboard interaction patterns.',
     tech: ['React', 'Tailwind CSS', 'Supabase'],
