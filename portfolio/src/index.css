@@ -153,7 +153,6 @@ button:focus-visible {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
   color: var(--heading);
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -161,15 +160,6 @@ button:focus-visible {
   letter-spacing: 0.16em;
   text-decoration: none;
   text-transform: uppercase;
-}
-
-.brand-mark {
-  display: block;
-  width: 0.7rem;
-  height: 0.7rem;
-  background: var(--accent);
-  box-shadow: 0.35rem 0.35rem 0 var(--accent-soft);
-  transform: rotate(45deg);
 }
 
 .desktop-nav {
@@ -312,17 +302,8 @@ button:focus-visible {
 .status-line {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
   padding-left: 0.75rem;
   border-left: 2px solid var(--accent);
-}
-
-.status-dot {
-  display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  background: var(--accent);
-  transform: rotate(45deg);
 }
 
 .hero-title {
@@ -593,21 +574,11 @@ figcaption {
 .skills-list li {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
   min-height: 4rem;
   padding: 0.85rem 1rem 0.85rem 0;
   border-bottom: 1px solid var(--border);
   color: var(--heading);
   font-size: 1rem;
-}
-
-.skill-marker {
-  display: block;
-  flex: 0 0 auto;
-  width: 0.5rem;
-  height: 0.5rem;
-  border: 1px solid var(--accent);
-  transform: rotate(45deg);
 }
 
 .project-list {

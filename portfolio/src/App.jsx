@@ -178,7 +178,6 @@ function App() {
             }}
           >
             <motion.p className="eyebrow status-line" variants={revealVariants}>
-              <span aria-hidden="true" className="status-dot" />
               Open to internship opportunities
             </motion.p>
 
@@ -304,7 +303,6 @@ function App() {
           <ul className="skills-list">
             {skills.map((skill) => (
               <li key={skill}>
-                <span aria-hidden="true" className="skill-marker" />
                 {skill}
               </li>
             ))}
@@ -390,7 +388,6 @@ function Navbar({
     <header className="site-header">
       <nav aria-label="Primary navigation" className="site-header-inner">
         <a className="brand" href="#home">
-          <span aria-hidden="true" className="brand-mark" />
           <span>JT / Cipriano</span>
         </a>
 
