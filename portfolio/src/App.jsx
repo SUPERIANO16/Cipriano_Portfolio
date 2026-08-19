@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   ArrowUpRight,
   Mail,
@@ -46,6 +46,7 @@ const LinkedinIcon = ({ size = 20 }) => (
 const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
+  { label: 'Work', href: '#work' },
   { label: 'Skills', href: '#skills' },
   { label: 'Resume', href: '/resume.pdf', external: true },
   { label: 'Contact', href: '#contact' },
@@ -87,6 +88,15 @@ const projects = [
   },
 ]
 
+const contactEmail = 'terrencecipriano@gmail.com'
+const githubUrl = 'https://github.com/SUPERIANO16'
+const linkedinUrl = 'https://www.linkedin.com/in/jaedrian-terrence-cipriano-715294399'
+
+const revealVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0 },
+}
+
 function getInitialDarkMode() {
   if (typeof window === 'undefined') return true
 
@@ -101,6 +111,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(getInitialDarkMode)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [photoLoaded, setPhotoLoaded] = useState(false)
+  const menuButtonRef = useRef(null)
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
@@ -108,81 +120,91 @@ function App() {
     window.localStorage.setItem('theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
 
+  useEffect(() => {
+    if (!mobileOpen) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [mobileOpen])
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = mobileOpen ? 'hidden' : previousOverflow
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [mobileOpen])
+
   const themeLabel = darkMode ? 'Switch to light mode' : 'Switch to dark mode'
 
-  const sectionVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 24 },
-      show: { opacity: 1, y: 0 },
-    }),
-    [],
-  )
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_0%,var(--glow),transparent_32%),linear-gradient(135deg,var(--grid)_1px,transparent_1px)] bg-[length:auto,28px_28px]" />
+    <div className="site-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+      <div aria-hidden="true" className="site-background" />
+
       <Navbar
         darkMode={darkMode}
         mobileOpen={mobileOpen}
         navLinks={navLinks}
+        reduceMotion={reduceMotion}
+        menuButtonRef={menuButtonRef}
         setDarkMode={setDarkMode}
         setMobileOpen={setMobileOpen}
         themeLabel={themeLabel}
       />
 
-      <main>
-        <section
-          id="home"
-          className="mx-auto grid min-h-dvh w-full max-w-7xl items-center gap-12 px-5 pb-20 pt-32 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10"
-        >
+      <main id="main-content">
+        <section className="hero-shell" id="home">
           <motion.div
-            initial="hidden"
-            animate="show"
+            animate={reduceMotion ? undefined : 'show'}
+            className="hero-copy"
+            initial={reduceMotion ? false : 'hidden'}
             variants={{
               hidden: { opacity: 0 },
               show: {
                 opacity: 1,
-                transition: { staggerChildren: 0.11, delayChildren: 0.08 },
+                transition: { staggerChildren: 0.08, delayChildren: 0.08 },
               },
             }}
           >
-            <motion.p
-              variants={sectionVariants}
-              className="mb-5 inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)] shadow-sm"
-            >
-              <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_22px_var(--accent)]" />
-              Open to Internship Opportunities
+            <motion.p className="eyebrow status-line" variants={revealVariants}>
+              <span aria-hidden="true" className="status-dot" />
+              Open to internship opportunities
             </motion.p>
 
-            <motion.h1
-              variants={sectionVariants}
-              className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.08em] text-[var(--heading)] sm:text-6xl lg:text-8xl"
-            >
-              Jaedrian Terrence T. Cipriano
-            </motion.h1>
+            <motion.div variants={revealVariants}>
+              <h1 className="hero-title">
+                <span>Jaedrian Terrence</span>
+                <span className="hero-title-line">T. Cipriano</span>
+              </h1>
+            </motion.div>
 
-            <motion.p
-              variants={sectionVariants}
-              className="mt-7 max-w-2xl text-lg leading-8 text-[var(--muted)]"
-            >
+            <motion.p className="hero-description" variants={revealVariants}>
               Computer Science student focused on frontend engineering, clean
               user experiences, accessible interaction design, and real-world
               web applications.
             </motion.p>
 
-            <motion.div
-              variants={sectionVariants}
-              className="mt-9 flex flex-col gap-3 sm:flex-row"
-            >
-              <a className="button-primary" href="#contact">
-                Contact Me
+            <motion.div className="hero-actions" variants={revealVariants}>
+              <a className="button button-primary" href="#contact">
+                Contact me
                 <ArrowUpRight aria-hidden="true" size={18} />
               </a>
-              <a className="button-secondary" href="#about">
-                About Me
+              <a className="button button-secondary" href="#about">
+                About me
               </a>
               <a
-                className="button-secondary"
+                className="button button-secondary"
                 href="/resume.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -190,93 +212,125 @@ function App() {
                 Resume
               </a>
             </motion.div>
+
+            <motion.div
+              aria-label="Profile summary"
+              className="hero-context"
+              variants={revealVariants}
+            >
+              <div>
+                <span className="context-label">Focus</span>
+                <span>Frontend engineering</span>
+              </div>
+              <div>
+                <span className="context-label">Track</span>
+                <span>Intelligent Systems</span>
+              </div>
+            </motion.div>
           </motion.div>
 
-          <motion.div
-            aria-label="Profile photo area"
-            className="relative mx-auto w-full max-w-[26rem] lg:max-w-none"
-            initial={{ opacity: 0, scale: 0.96, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.55, ease: 'easeOut' }}
+          <motion.figure
+            animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+            className="hero-portrait"
+            initial={reduceMotion ? false : { opacity: 0, x: 18 }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { delay: 0.2, duration: 0.6, ease: 'easeOut' }
+            }
           >
-            <div className="absolute -inset-6 rounded-[2.5rem] border border-[var(--border)] opacity-60" />
-            <div className="absolute -right-4 top-10 h-24 w-24 rounded-full bg-[var(--accent)] opacity-20 blur-3xl" />
-            <div className="group relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[var(--border-strong)] bg-[var(--surface-strong)] shadow-[0_30px_100px_var(--shadow)]">
+            <div className="portrait-frame">
               <img
                 alt="Portrait of Jaedrian Terrence T. Cipriano"
-                className={`h-full w-full object-cover transition-opacity duration-500 ${photoLoaded ? 'opacity-100' : 'opacity-0'
-                  }`}
+                className={photoLoaded ? 'portrait-image' : 'portrait-image is-loading'}
+                decoding="async"
+                fetchPriority="high"
                 onLoad={() => setPhotoLoaded(true)}
                 src="/profile.png"
               />
               {!photoLoaded && (
-                <div aria-hidden="true" className="absolute inset-0 grid place-items-center p-8">
-                  <div className="w-full rounded-[1.5rem] border border-dashed border-[var(--border-strong)] bg-[var(--surface)] p-8 text-center">
-                    <div className="mx-auto mb-6 h-28 w-28 rounded-full border border-[var(--border)] bg-[linear-gradient(135deg,var(--surface-strong),var(--bg))]" />
-                    <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)]">
-                      /public/profile.png
-                    </p>
-                    <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-                      Add your photo here. Layout already reserves space beside
-                      hero section.
-                    </p>
-                  </div>
+                <div aria-hidden="true" className="portrait-placeholder">
+                  <span>Loading portrait</span>
                 </div>
               )}
             </div>
-          </motion.div>
+            <figcaption>
+              <span>Portrait / profile.png</span>
+              <span>JT / profile</span>
+            </figcaption>
+          </motion.figure>
         </section>
 
-        <Section id="about" eyebrow="About" title="Frontend craft, sharpened by real projects.">
-          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Section
+          eyebrow="About / profile"
+          id="about"
+          reduceMotion={reduceMotion}
+          title="Frontend craft, sharpened by real projects."
+        >
+          <div className="about-grid">
             <p className="section-copy">
               I am a frontend developer and Computer Science student pursuing
               the Intelligent Systems track at De La Salle University
               Dasmarinas. I like turning complex requirements into interfaces
               that feel clear, responsive, and useful.
             </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ['Focus', 'React interfaces, portfolio systems, app dashboards'],
-                ['Strength', 'Clean UI structure, accessibility, fast iteration'],
-                ['Approach', 'Design-minded engineering with maintainable code'],
-                ['Goal', 'Frontend developer internship and production projects'],
-              ].map(([label, value]) => (
-                <article className="info-card" key={label}>
-                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--accent)]">
-                    {label}
-                  </p>
-                  <p className="mt-3 text-[var(--heading)]">{value}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        <Section id="skills" eyebrow="Skills" title="Tools I use to build polished interfaces.">
-          <div className="flex flex-wrap gap-3">
-            {skills.map((skill) => (
-              <span className="skill-chip" key={skill}>
-                {skill}
-              </span>
-            ))}
+            <dl className="detail-list">
+              <div className="detail-row">
+                <dt>Focus</dt>
+                <dd>React interfaces, portfolio systems, app dashboards</dd>
+              </div>
+              <div className="detail-row">
+                <dt>Strength</dt>
+                <dd>Clean UI structure, accessibility, fast iteration</dd>
+              </div>
+              <div className="detail-row">
+                <dt>Approach</dt>
+                <dd>Design-minded engineering with maintainable code</dd>
+              </div>
+              <div className="detail-row">
+                <dt>Goal</dt>
+                <dd>Frontend developer internship and production projects</dd>
+              </div>
+            </dl>
           </div>
         </Section>
 
         <Section
-          eyebrow="Selected Projects"
+          eyebrow="Skills / toolkit"
+          id="skills"
+          reduceMotion={reduceMotion}
+          title="Tools I use to build polished interfaces."
+        >
+          <ul className="skills-list">
+            {skills.map((skill) => (
+              <li key={skill}>
+                <span aria-hidden="true" className="skill-marker" />
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section
+          eyebrow="Work / selected projects"
+          id="work"
+          reduceMotion={reduceMotion}
           title="Project work with frontend decisions front and center."
         >
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="project-list">
             {projects.map((project) => (
-              <article className="project-card" key={project.title}>
-                <h3 className="text-xl font-semibold text-[var(--heading)]">
-                  {project.title}
-                </h3>
-                <p className="mt-4 leading-7 text-[var(--muted)]">
-                  {project.description}
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
+              <article className="project-item" key={project.title}>
+                <div className="project-label">
+                  <span>Project</span>
+                  <span aria-hidden="true" className="project-mark">
+                    ↗
+                  </span>
+                </div>
+                <div className="project-body">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                </div>
+                <div className="project-tech-list">
                   {project.tech.map((tech) => (
                     <span className="project-tech" key={tech}>
                       {tech}
@@ -289,28 +343,28 @@ function App() {
         </Section>
       </main>
 
-      <footer id="contact" className="border-t border-[var(--border)] px-5 py-12 sm:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-7 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)]">
-              Contact
+      <footer className="contact-section" id="contact">
+        <div className="contact-inner">
+          <div className="contact-copy">
+            <p className="eyebrow">Contact / next</p>
+            <h2>Let&apos;s build something clear and useful.</h2>
+            <p>
+              Frontend developer intern applicant · BS Computer Science student
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[var(--heading)]">
-              Let&apos;s build something clear and useful.
-            </h2>
-            <p className="mt-3 text-[var(--muted)]">
-              Frontend developer intern applicant &middot; BS Computer Science student
-            </p>
+            <a className="contact-email" href={`mailto:${contactEmail}`}>
+              {contactEmail}
+              <ArrowUpRight aria-hidden="true" size={18} />
+            </a>
           </div>
-          <div className="flex items-center gap-3">
-            <SocialLink href="mailto:terrencecipriano@gmail.com" label="Email">
+          <div className="social-list">
+            <SocialLink href={`mailto:${contactEmail}`} label="Email">
               <Mail size={20} />
             </SocialLink>
-            <SocialLink href="https://github.com/SUPERIANO16" label="GitHub">
+            <SocialLink href={githubUrl} label="GitHub">
               <GithubIcon size={20} />
             </SocialLink>
             <SocialLink
-              href="https://www.linkedin.com/in/jaedrian-terrence-cipriano-715294399"
+              href={linkedinUrl}
               label="LinkedIn"
             >
               <LinkedinIcon size={20} />
@@ -326,24 +380,21 @@ function Navbar({
   darkMode,
   mobileOpen,
   navLinks,
+  reduceMotion,
+  menuButtonRef,
   setDarkMode,
   setMobileOpen,
   themeLabel,
 }) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[var(--nav)] backdrop-blur-xl">
-      <nav
-        aria-label="Primary navigation"
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10"
-      >
-        <a className="group flex items-center gap-3" href="#home">
-          <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_22px_var(--accent)]" />
-          <span className="font-mono text-sm font-semibold uppercase tracking-[0.24em] text-[var(--heading)]">
-            JT Cipriano
-          </span>
+    <header className="site-header">
+      <nav aria-label="Primary navigation" className="site-header-inner">
+        <a className="brand" href="#home">
+          <span aria-hidden="true" className="brand-mark" />
+          <span>JT / Cipriano</span>
         </a>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="desktop-nav">
           {navLinks.map((link) => (
             <NavLink key={link.label} link={link} />
           ))}
@@ -355,25 +406,32 @@ function Navbar({
         </div>
 
         <button
+          ref={menuButtonRef}
+          aria-controls="mobile-nav"
           aria-expanded={mobileOpen}
           aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          className="grid h-11 w-11 place-items-center rounded-full border border-[var(--border)] text-[var(--heading)] transition hover:border-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] md:hidden"
+          className="mobile-trigger"
           onClick={() => setMobileOpen((value) => !value)}
           type="button"
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileOpen ? (
+            <X aria-hidden="true" size={20} />
+          ) : (
+            <Menu aria-hidden="true" size={20} />
+          )}
         </button>
       </nav>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {mobileOpen && (
           <motion.div
-            className="border-t border-[var(--border)] bg-[var(--nav)] px-5 py-5 shadow-2xl md:hidden"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            className="mobile-panel"
+            exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+            id="mobile-nav"
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
           >
-            <div className="mx-auto flex max-w-7xl flex-col gap-2">
+            <div className="mobile-nav-inner">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.label}
@@ -397,7 +455,7 @@ function Navbar({
 function NavLink({ link, onClick }) {
   return (
     <a
-      className="rounded-full px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface)] hover:text-[var(--heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+      className="nav-link"
       href={link.href}
       onClick={onClick}
       rel={link.external ? 'noopener noreferrer' : undefined}
@@ -412,32 +470,34 @@ function ThemeToggle({ darkMode, label, onClick }) {
   return (
     <button
       aria-label={label}
-      className="mt-2 inline-grid h-11 w-11 place-items-center rounded-full border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--heading)] transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] md:ml-2 md:mt-0"
+      aria-pressed={darkMode}
+      className="theme-toggle"
       onClick={onClick}
+      title={label}
       type="button"
     >
-      {darkMode ? <Sun aria-hidden="true" size={19} /> : <Moon aria-hidden="true" size={19} />}
+      {darkMode ? (
+        <Sun aria-hidden="true" size={18} />
+      ) : (
+        <Moon aria-hidden="true" size={18} />
+      )}
     </button>
   )
 }
 
-function Section({ children, eyebrow, id, title }) {
+function Section({ children, eyebrow, id, reduceMotion, title }) {
   return (
     <motion.section
-      className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10"
+      className="content-section"
       id={id}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-120px' }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
+      initial={reduceMotion ? false : 'hidden'}
+      variants={revealVariants}
+      viewport={{ once: true, margin: '-100px' }}
+      whileInView={reduceMotion ? undefined : 'show'}
     >
-      <div className="mb-10 max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent)]">
-          {eyebrow}
-        </p>
-        <h2 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.06em] text-[var(--heading)] sm:text-5xl">
-          {title}
-        </h2>
+      <div className="section-heading">
+        <p className="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
       </div>
       {children}
     </motion.section>
@@ -445,13 +505,15 @@ function Section({ children, eyebrow, id, title }) {
 }
 
 function SocialLink({ children, href, label }) {
+  const external = href.startsWith('http')
+
   return (
     <a
       aria-label={label}
-      className="grid h-12 w-12 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+      className="social-link"
       href={href}
-      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      target={href.startsWith('http') ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      target={external ? '_blank' : undefined}
     >
       {children}
     </a>
